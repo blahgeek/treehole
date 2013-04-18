@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <title>清华树洞</title>
+    {% if ISIPHONE and TOURL|length > 0 %}
+    <script type="text/javascript">
+        window.location = "{{ TOURL }}";
+    </script>
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="清华树洞">
+    {% if ISIPHONE %}
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-ipad3-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-iphone4-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-ipad-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-iphone.png">
+    {% endif %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}min.css"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-signin">
+        <h2 class="form-signin-heading">清华树洞发布</h2>
+        <form action="/" method="POST">
+            {% csrf_token %}
+            <textarea name="content" style="width: 236px; height: 70px">{{ content }}</textarea>
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="alert {% if msg.tags %}alert-{{ msg.tags }}{% endif %}">
+                {{ msg }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <input type="submit" class="btn btn-large btn-primary">
+        </form>
+        <p><strong>说明：</strong></p>
+        <p> 这是一个向同学们匿名分享你的秘密的平台，吐槽、提问请找尹福。</p>
+        <p> 仅允许校内IP发布，每IP发布间隔至少为30分钟。</p>
+        <p> 基情链接：
+        {% for link in LINKS %}
+        <a href="{{ link.1 }}">{{ link.0 }}</a> 
+        {% endfor %}
+        </p>
+      </div>
+    </div> <!-- /container -->
+</body>
+</html>
