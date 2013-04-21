@@ -54,8 +54,19 @@ class RenRen:
         except (AssertionError, simplejson.JSONDecodeError):
             raise RuntimeError('Set status error')
 
+    def postWallStatu(self, text, wallid):
+        try:
+            response = self.post('http://w.renren.com/wall/%s/publish' % str(wallid), 
+                    {'channel': '0', 
+                     'content': text, 
+                     'isSync': '1', 
+                     'referId': '', 
+                     'hasImage': '0'}).json()
+        except (AssertionError, simplejson.JSONDecodeError):
+            raise RuntimeError('Set status error')
+
 
 if __name__ == '__main__':
-    r = RenRen(argv[1])
+    r = RenRen('601677049')
     r.loginByCookie('cookie.txt')
-    print r.setStatu(sys.argv[2])
+    print r.postWallStatu(sys.argv[1], sys.argv[2])
