@@ -26,7 +26,7 @@
         <h2 class="form-signin-heading">清华树洞发布</h2>
         <form action="/" method="POST">
             {% csrf_token %}
-            <textarea name="content" style="width: 236px; height: 70px">{{ content }}</textarea>
+            <textarea name="content" style="width: 236px; height: 70px" placeholder="{{ PLACEHOLER }}">{{ content }}</textarea>
             {% if messages %}
             {% for msg in messages %}
             <div class="alert {% if msg.tags %}alert-{{ msg.tags }}{% endif %}">
@@ -36,10 +36,9 @@
             {% endif %}
             <input type="submit" class="btn btn-large btn-primary">
         </form>
-        <p><strong>说明：</strong></p>
-        <p> 这是一个向同学们匿名分享你的秘密的平台，吐槽、提问请找尹福。</p>
-        <p> 仅允许校内IP发布，每IP发布间隔至少为30分钟。</p>
-        <p> 基情链接：
+        <br/>
+        <p> 那些现实中没有发出的声音，请把它留在这里……</p>
+        <p> 友情链接：
         {% for link in LINKS %}
         <a href="{{ link.1 }}">{{ link.0 }}</a> 
         {% endfor %}
