@@ -11,8 +11,8 @@ from django.views.decorators.http import require_http_methods
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.contrib import messages
-from treehole.models import ContentModel
-from treehole.utils import checkIP, postStatu, MSG, PLACEHOLDERS
+from treehole.models import ContentModel, PlaceholderModel
+from treehole.utils import checkIP, postStatu, MSG
 from treehole.settings import LINKS
 from datetime import datetime, timedelta
 import logging
@@ -56,5 +56,6 @@ def index(req):
     isIphone = ('iPhone' in req.META.get('HTTP_USER_AGENT', '') and req.method == 'GET')
     return render_to_response('index.html', \
             {'ICO_NUM': icon, 'TOURL': tourl, 'ISIPHONE': isIphone, 
-                'LINKS': LINKS, 'PLACEHOLER': random.choice(PLACEHOLDERS)}, 
+                'LINKS': LINKS, 
+                'PLACEHOLER': PlaceholderModel.objects.order_by('?')[0].content }, 
             context_instance=RequestContext(req))
