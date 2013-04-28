@@ -17,3 +17,10 @@
 
 另外，为防止cookie过期，需要定时刷页面，向`crontab`中加入
 `*/15 * * * * /path/to/manage.py refresh`，每15分钟刷新一次。
+
+## 关于textarea的placeholer
+
+通过`./manage.py placeholder -a CONTENT`添加，将会将CONTENT添加入数据库。
+生成页面时会从数据库中随即挑选一条。
+
+该命令还能列出和删除，详见`./manage.py placeholder -h`。
