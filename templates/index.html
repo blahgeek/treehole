@@ -16,7 +16,8 @@
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-ipad-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-iphone.png">
     {% endif %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}min.css"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}all.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 
   </head>
   <body>
@@ -26,7 +27,8 @@
         <h2 class="form-signin-heading">清华树洞发布</h2>
         <form action="/" method="POST">
             {% csrf_token %}
-            <textarea name="content" style="width: 236px; height: 120px" placeholder="{{ PLACEHOLER }}">{{ content }}</textarea>
+            <label for="content"></label>
+            <textarea name="content" id="content" style="width: 236px; height: 120px" placeholder="{{ PLACEHOLER }}">{{ content }}</textarea>
             {% if messages %}
             {% for msg in messages %}
             <div class="alert {% if msg.tags %}alert-{{ msg.tags }}{% endif %}">
@@ -45,5 +47,7 @@
         </p>
       </div>
     </div> <!-- /container -->
+    <script src="{{ STATIC_URL }}jquery.onfontresize.min.js" charset="utf-8"></script>
+    <script src="{{ STATIC_URL }}placeholder_polyfill.jquery.js" charset="utf-8"></script>
 </body>
 </html>
