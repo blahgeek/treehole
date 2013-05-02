@@ -20,6 +20,7 @@ import random
 
 def index(req):
     ipaddr = req.META.get('REMOTE_ADDR', '')
+    _content = ''
     if req.method == 'POST':
         _content = req.POST.get('content', '')
         if not checkIP(ipaddr):
@@ -41,6 +42,7 @@ def index(req):
                 logging.error('Error in ' + str(ContentModel.objects.count()))
             else:
                 messages.success(req, MSG['PUBLISH_OK'])
+                _content = ''
 
 # for doreamon icon
     try:
@@ -57,5 +59,6 @@ def index(req):
     return render_to_response('index.html', \
             {'ICO_NUM': icon, 'TOURL': tourl, 'ISIPHONE': isIphone, 
                 'LINKS': LINKS, 
-                'PLACEHOLER': PlaceholderModel.objects.order_by('?')[0].content }, 
+                'PLACEHOLER': PlaceholderModel.objects.order_by('?')[0].content, 
+                'content': _content}, 
             context_instance=RequestContext(req))
