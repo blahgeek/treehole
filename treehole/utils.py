@@ -7,6 +7,7 @@ if hasattr(sys, 'setdefaultencoding'):
     sys.setdefaultencoding('UTF-8')
 
 import logging
+from datetime import datetime
 from treehole.renren import RenRen
 from treehole.settings import COOKIE, PAGE_ID
 import os
