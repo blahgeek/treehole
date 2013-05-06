@@ -21,6 +21,12 @@
 ## 关于textarea的placeholer
 
 通过`./manage.py placeholder -a CONTENT`添加，将会将CONTENT添加入数据库。
-生成页面时会从数据库中随即挑选一条。
+生成页面时会从数据库中随机挑选一条。
 
 该命令还能列出和删除，详见`./manage.py placeholder -h`。
+
+## 手动发布状态
+
+`./manage.py poststatu CONTENT`：发布一条状态（包含编号）并且存入数据库。
+`./manage.py poststatu -r CONTENT`：发布一条状态（不包含编号）。
+
