@@ -10,6 +10,7 @@ import logging
 from treehole.renren import RenRen
 from treehole.settings import COOKIE, PAGE_ID
 import os
+from treehole.models import ContentModel
 from ipaddr import IPNetwork, IPAddress
 
 def checkIP(addr):
@@ -25,11 +26,21 @@ def checkIP(addr):
             )
     return any([IPAddress(addr) in x for x in IPS])
 
-def postStatu(status, number):
-    text = '#' + str(number) + ' ' + status
+def postRawStatu(text):
+    """ Post status without number, without saving to db"""
     r = RenRen(PAGE_ID)
     r.loginByCookie(COOKIE)
     r.setStatu(text)
+
+def postStatu(text, ipaddr=''):
+    """ Post status, start with '#xxx', saving to db"""
+    new_content = ContentModel(ip=ipaddr, 
+            time=datetime.now(), 
+            content=text)
+    new_content.save()
+    number = ContentModel.objects.count()
+    text = '#' + str(number) + ' ' + text
+    postRawStatu(text)
 
 MSG = {
         'IP_NOT_VALID': '不允许您的IP发布', 

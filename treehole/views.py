@@ -31,12 +31,8 @@ def index(req):
                 (datetime.now()-timedelta(minutes=30), datetime.now())).count() > 0:
             messages.error(req, MSG['TOO_MANY_TIMES'])
         else:
-            new_content = ContentModel(ip=ipaddr, 
-                    time=datetime.now(), 
-                    content=_content)
-            new_content.save()
             try:
-                postStatu(_content, ContentModel.objects.count())
+                postStatu(_content, ipaddr)
             except RuntimeError:
                 messages.error(req, MSG['PUBLISH_ERROR'])
                 logging.error('Error in ' + str(ContentModel.objects.count()))
