@@ -30,8 +30,10 @@ def checkIP(addr):
 def postRawStatu(text):
     """ Post status without number, without saving to db"""
     r = RenRen(PAGE_ID)
-    r.loginByCookie(COOKIE)
-    r.setStatu(text)
+    try:
+        r.postStatu(text)
+    except:
+        raise RuntimeError('set status error')
 
 def postStatu(text, ipaddr=''):
     """ Post status, start with '#xxx', saving to db"""

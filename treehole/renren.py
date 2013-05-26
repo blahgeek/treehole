@@ -1,72 +1,46 @@
-#-*-coding:utf-8-*-
+#!/usr/bin/env python
+# -*- coding=UTF-8 -*-
+# Created at May 26 10:07 by BlahGeek@Gmail.com
 
-import requests
-import simplejson
-import re
-import random
-import urllib
-import os
 import sys
+if hasattr(sys, 'setdefaultencoding'):
+    sys.setdefaultencoding('UTF-8')
 
+import os
+from oauth2client.file import Storage
+from oauth2client.client import AccessTokenRefreshError
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.tools import run
+import httplib2
+import requests
+from .settings import DJANGO_ROOT_DIR, FLOW, CRE_STORAGE
 
 class RenRen:
 
     def __init__(self, pageid):
-        self.session = requests.Session()
-        self.token = {}
         self.pageid = pageid
+        self.storage = Storage(CRE_STORAGE)
+        self.cre = self.storage.get()
 
-    def loginByCookie(self, cookie_path):
-        with open(cookie_path) as fp:
-            cookie_str = fp.read()
-            cookie_dict = dict([v.strip().split('=', 1) for v in cookie_str.strip().split(';')])
-            self.session.cookies = requests.utils.cookiejar_from_dict(cookie_dict)
-        self.getToken()
+    def auth(self):
+        run(FLOW, self.storage)
 
-    def getToken(self):
-        p = re.compile("get_check:'(.*)',get_check_x:'(.*)',env")
-        r = self.get('http://page.renren.com/%s/fdoing' % self.pageid)
-        result = p.search(r.text)
-        self.token = {
-            'requestToken': result.group(1),
-            '_rtk': result.group(2)
-        }
-
-    def request(self, url, method, data={}):
-        if data:
-            data.update(self.token)
-        if method == 'get':
-            return self.session.get(url, data=data)
-        elif method == 'post':
-            return self.session.post(url, data=data)
-
-    def post(self, url, data={}):
-        return self.request(url, 'post', data)
-
-    def get(self, url, data={}):
-        return self.request(url, 'get', data)
-
-    def setStatu(self, text):
-        try:
-            response = self.post('http://page.renren.com/doing/update', 
-                    {'pid': self.pageid, 'c': text}).json()
-            assert(response['code'] == 0)
-        except (AssertionError, simplejson.JSONDecodeError):
-            raise RuntimeError('Set status error')
-
-    def postWallStatu(self, text, wallid):
-        try:
-            response = self.post('http://w.renren.com/wall/%s/publish' % str(wallid), 
-                    {'channel': '0', 
-                     'content': text, 
-                     'isSync': '1', 
-                     'referId': '', 
-                     'hasImage': '0'}).json()
-        except (AssertionError, simplejson.JSONDecodeError):
-            raise RuntimeError('Set status error')
-
-
-if __name__ == '__main__':
-    r = RenRen('601677049')
-    r.loginByCookie('cookie.txt')
-    print r.postWallStatu(sys.argv[1], sys.argv[2])
+    def postStatus(self, text):
+        assert(self.cre is not None)
+        if self.cre.access_token_expired:
+            # refresh token
+            http = httplib2.Http()
+            http = cre.authorize(http)
+            self.cre.refresh(http)
+        r = requests.post('https://api.renren.com/restserver.do', 
+                {
+                    'v': '1.0', 
+                    'access_token': self.cre.access_token, 
+                    'format': 'json', 
+                    'method': 'pages.setStatus', 
+                    'page_id': str(self.pageid), 
+                    'status': text
+                    })
+        # for different versions of requests
+        j = r.json() if hasattr(r.json, '__call__') else r.json
+        assert(j['result'] == 1)
