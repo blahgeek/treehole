@@ -9,6 +9,7 @@ if hasattr(sys, 'setdefaultencoding'):
 
 # Django settings for treehole project.
 import os 
+from oauth2client.client import flow_from_clientsecrets
 
 DJANGO_ROOT_DIR = os.path.join(os.path.dirname(\
         os.path.realpath(__file__)), '..')
