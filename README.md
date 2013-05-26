@@ -2,21 +2,33 @@
 
 例子参见[清华树洞](http://thutreehole.tk).
 
+由于2013年5月24号左右开始，人人的cookie会在每天零点时过期，需要重新登录，因此现在使用api方式发布状态。
+但是未审核的api每用户每小时最多只能发布30条状态（好像），之后可以尝试采用多个api key或者多个用户的方式。
+
 ## 使用说明
 
 修改`treehole/settings.py`中的`PAGE_ID, LINKS, SECRET_KEY`，
 运行`python2 manage.py syncdb`初始化数据库，
-在`cookie.txt`中写入cookie，就能使用了。
+准备Api等，如下。
 
-## 关于Cookie
+## 关于Api
 
-- 申请一个公共主页后，另外申请一个马甲帐号A
-- 将A添加为公共主页的管理员
-- 在电脑隐身窗口登录A，切换至公共主页管理，记录下cookie写入`cookie.txt`
-- 直接关闭浏览器，从此不在浏览器上登录
+- 用个人的人人帐号在[这里](http://app.renren.com/developers/app)申请一个应用，注意在未审核的情况下只有管理员和开发者才能
+使用该应用。
+- 在应用信息的域名、安全设置的回调地址中填`localhost:8090`。
+- 在应用根文件夹下新建一个`client_secrets.json`文件，文件格式如下：
 
-另外，为防止cookie过期，需要定时刷页面，向`crontab`中加入
-`*/15 * * * * /path/to/manage.py refresh`，每15分钟刷新一次。
+    {
+        "installed": {
+            "client_id": "YOUR API KEY", 
+            "client_secret": "YOUR SECRET KEY", 
+            "redirect_uris": ["http://graph.renren.com/oauth/login_success.html"], 
+            "auth_uri": "https://graph.renren.com/oauth/authorize", 
+            "token_uri": "https://graph.renren.com/oauth/token"
+        }
+    }
+
+- 运行`./manage.py auth`认证。
 
 ## 关于textarea的placeholer
 

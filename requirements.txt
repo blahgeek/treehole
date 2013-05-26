@@ -1,2 +1,4 @@
 django-argparse-command
 ipaddr
+oauth2client
+httplib2
