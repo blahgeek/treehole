@@ -9,7 +9,7 @@ if hasattr(sys, 'setdefaultencoding'):
 import logging
 from datetime import datetime
 from treehole.renren import RenRen
-from treehole.settings import COOKIE, PAGE_ID
+from treehole.settings import PAGE_ID
 import os
 from treehole.models import ContentModel
 from ipaddr import IPNetwork, IPAddress
@@ -30,10 +30,7 @@ def checkIP(addr):
 def postRawStatu(text):
     """ Post status without number, without saving to db"""
     r = RenRen(PAGE_ID)
-    try:
-        r.postStatu(text)
-    except:
-        raise RuntimeError('set status error')
+    r.postStatus(text)
 
 def postStatu(text, ipaddr=''):
     """ Post status, start with '#xxx', saving to db"""

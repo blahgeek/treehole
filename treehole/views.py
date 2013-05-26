@@ -33,7 +33,7 @@ def index(req):
         else:
             try:
                 postStatu(_content, ipaddr)
-            except RuntimeError:
+            except:
                 messages.error(req, MSG['PUBLISH_ERROR'])
                 logging.error('Error in ' + str(ContentModel.objects.count()))
             else:
