@@ -39,6 +39,10 @@
 
 ## 手动发布状态
 
-`./manage.py poststatu CONTENT`：发布一条状态（包含编号）并且存入数据库。
-`./manage.py poststatu -r CONTENT`：发布一条状态（不包含编号）。
+- `./manage.py poststatu CONTENT`：发布一条状态（包含编号）并且存入数据库。
+- `./manage.py poststatu -r CONTENT`：发布一条状态（不包含编号）。
 
+## 屏蔽一个IP地址
+
+- `./manage.py IP`： 屏蔽该IP地址发布状态。
+- `./manage.py -r IP`：解除该IP的屏蔽。

@@ -11,7 +11,7 @@ from datetime import datetime
 from treehole.renren import RenRen
 from treehole.settings import PAGE_ID
 import os
-from treehole.models import ContentModel
+from treehole.models import ContentModel, BlockIpModel
 from ipaddr import IPNetwork, IPAddress
 
 def checkIP(addr):
@@ -25,6 +25,8 @@ def checkIP(addr):
             IPNetwork('10.0.0.0/8'), 
             IPNetwork('192.168.0.0/16'), 
             )
+    if BlockIpModel.objects.filter(ip=addr).count() > 0:
+        return False
     return any([IPAddress(addr) in x for x in IPS])
 
 def postRawStatu(text):
