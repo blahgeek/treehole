@@ -1,0 +1,16 @@
+{% load chartkick %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <title>清华树洞统计</title>
+        {% include_chartkick_scripts googlecharts %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui.css">
+    </head>
+    <body>
+        <div class="container">
+            <h2 style="text-align: center;">{{ TITLE }}, 生成时间：{{ TIME }}</h2>
+            {% line_chart data with height=500px %}
+        </div>
+    </body>
+</html>

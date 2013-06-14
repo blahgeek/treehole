@@ -10,6 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
+from django.views.decorators.cache import cache_page
 from django.contrib import messages
 from treehole.models import ContentModel, PlaceholderModel
 from treehole.utils import checkIP, postStatu, MSG
@@ -17,6 +18,34 @@ from treehole.settings import LINKS
 from datetime import datetime, timedelta
 import logging
 import random
+
+@cache_page(60 * 60)
+def chart_day(req):
+    now = datetime.now()
+    today = datetime(now.year, now.month, now.day)
+    data = {}
+    for i in xrange(1, 30):
+        start = today - timedelta(days=i)
+        data[start.strftime('%Y-%m-%d 00:00:00 +0800')] = ContentModel.objects.filter(time__range=\
+                (start, start+timedelta(days=1))).count()
+    return render_to_response('chart.html', 
+            {'data': data, 'TITLE': '树洞过去一个月发布统计', 
+                'TIME': now.strftime('%Y-%m-%d %H:%M')}, 
+            context_instance=RequestContext(req))
+
+@cache_page(60 * 15)
+def chart_hour(req):
+    now = datetime.now()
+    today = datetime(now.year, now.month, now.day, now.hour)
+    data = {}
+    for i in xrange(1, 24):
+        start = today - timedelta(hours=i)
+        data[start.strftime('%Y-%m-%d %H:00:00 +0800')] = ContentModel.objects.filter(time__range=\
+                (start, start+timedelta(hours=1))).count()
+    return render_to_response('chart.html', 
+            {'data': data, 'TITLE': '树洞过去一天发布统计', 
+                'TIME': now.strftime('%Y-%m-%d %H:%M')}, 
+            context_instance=RequestContext(req))
 
 def index(req):
     ipaddr = req.META.get('REMOTE_ADDR', '')
