@@ -563,7 +563,7 @@ textarea[class*="span"] {
 .login-screen {
   background-color: #1abc9c;
   min-height: 317px;
-  padding: 123px 199px 33px 306px;
+  padding: 93px 199px 33px 306px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -571,7 +571,7 @@ textarea[class*="span"] {
 .login-icon {
   left: 200px;
   position: absolute;
-  top: 160px;
+  top: 140px;
   width: 96px;
 }
 .login-icon > img {
@@ -731,7 +731,7 @@ textarea[class*="span"] {
 
 span.placeholder{
     position:absolute;
-    font-size:75%;
+    font-size:15px;
     color:#999;
     font-family:sans-serif;
     padding:4px 3px;
