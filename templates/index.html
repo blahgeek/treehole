@@ -56,5 +56,12 @@
 
         <script src="{{ STATIC_URL }}jquery.onfontresize.min.js" charset="utf-8"></script>
         <script src="{{ STATIC_URL }}placeholder_polyfill.jquery.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            $(".login-screen").css("background-color", "{{ COLOR.1 }}");
+            $(".btn-primary").css("background-color", "{{ COLOR.1 }}");
+            $(".btn-primary").hover(
+                    function(){$(this).css("background-color", "{{ COLOR.0 }}");}, 
+                    function(){$(this).css("background-color", "{{ COLOR.1 }}");});
+        </script>
       </body>
     </html>

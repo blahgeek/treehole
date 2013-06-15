@@ -13,7 +13,7 @@ from django.shortcuts import render_to_response, redirect
 from django.views.decorators.cache import cache_page
 from django.contrib import messages
 from treehole.models import ContentModel, PlaceholderModel
-from treehole.utils import checkIP, postStatu, MSG
+from treehole.utils import checkIP, postStatu, MSG, COLORS
 from treehole.settings import LINKS
 from datetime import datetime, timedelta
 import logging
@@ -85,5 +85,6 @@ def index(req):
             {'ICO_NUM': icon, 'TOURL': tourl, 'ISIPHONE': isIphone, 
                 'LINKS': LINKS, 
                 'PLACEHOLER': PlaceholderModel.objects.order_by('?')[0].content, 
-                'content': _content}, 
+                'content': _content, 
+                'COLOR': random.choice(COLORS)}, 
             context_instance=RequestContext(req))
