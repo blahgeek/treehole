@@ -5,6 +5,8 @@
 由于2013年5月24号左右开始，人人的cookie会在每天零点时过期，需要重新登录，因此现在使用api方式发布状态。
 但是未审核的api每用户每小时最多只能发布30条状态（好像），之后可以尝试采用多个api key或者多个用户的方式。
 
+新增发布量统计页面，在`/chart_hour`和`/chart_day`。
+
 ## 使用说明
 
 修改`treehole/settings.py`中的`PAGE_ID, LINKS, SECRET_KEY`，

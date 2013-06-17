@@ -2,3 +2,4 @@ django-argparse-command
 ipaddr
 oauth2client
 requests
+chartkick
