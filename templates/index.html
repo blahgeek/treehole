@@ -37,9 +37,13 @@
                 {% csrf_token %}
                 <div class="control-group">
                   <label for="content"></label>
-                  <textarea id="content" name="content" placeholder="{{PLACEHOLER}}"></textarea>
+                  <textarea id="content" name="content" placeholder="{{PLACEHOLER}}">{{ content }}</textarea>
                   <label class="login-field-icon fui-new"></label>
                 </div>
+                {% if need_recaptcha %}
+                <script type="text/javascript">var RecaptchaOptions = {theme: 'white'}; </script>
+                <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k={{ RECAPTCHA_PUBLIC_KEY }}"></script>
+                {% endif %}
                 {% if messages %}
                 {% for msg in messages %}
                 <div class="alert {% if msg.tags %}alert-{{ msg.tags }}{% endif %}">

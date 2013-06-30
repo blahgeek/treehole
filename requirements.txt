@@ -3,3 +3,4 @@ ipaddr
 oauth2client
 requests
 chartkick
+recaptcha-client

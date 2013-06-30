@@ -13,8 +13,10 @@ from django.shortcuts import render_to_response, redirect
 from django.views.decorators.cache import cache_page
 from django.contrib import messages
 from treehole.models import ContentModel, PlaceholderModel
-from treehole.utils import checkIP, postStatu, MSG, COLORS
+from treehole.utils import checkIP, postStatu, MSG, COLORS, needRecaptchar
 from treehole.settings import LINKS
+from treehole.settings import RECAPTCHA_PUBLIC_KEY, RECAPTCHA_PRIVATE_KEY
+from recaptcha.client import captcha
 from datetime import datetime, timedelta
 import logging
 import random
@@ -50,9 +52,17 @@ def chart_hour(req):
 def index(req):
     ipaddr = req.META.get('REMOTE_ADDR', '')
     _content = ''
+    _need_recaptcha = False
     if req.method == 'POST':
         _content = req.POST.get('content', '')
-        if not checkIP(ipaddr):
+        _need_recaptcha = needRecaptchar(ipaddr, _content)
+        if _need_recaptcha and len(req.POST.get('recaptcha_challenge_field', '')) == 0:
+            messages.error(req, MSG['RECAPTCHA_NEEDED'])
+        elif _need_recaptcha and not captcha.submit(req.POST.get('recaptcha_challenge_field', ''), 
+                req.POST.get('recaptcha_response_field'), 
+                RECAPTCHA_PRIVATE_KEY, ipaddr).is_valid:
+            messages.error(req, MSG['RECAPTCHA_INCORRECT'])
+        elif not checkIP(ipaddr):
             messages.error(req, MSG['IP_NOT_VALID'])
         elif not (len(_content) < 120 and len(_content) > 5):
             messages.error(req, MSG['CONTENT_TOO_LONG'])
@@ -86,5 +96,7 @@ def index(req):
                 'LINKS': LINKS, 
                 'PLACEHOLER': PlaceholderModel.objects.order_by('?')[0].content, 
                 'content': _content, 
+                'RECAPTCHA_PUBLIC_KEY': RECAPTCHA_PUBLIC_KEY, 
+                'need_recaptcha': _need_recaptcha, 
                 'COLOR': random.choice(COLORS)}, 
             context_instance=RequestContext(req))

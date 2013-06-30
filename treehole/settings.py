@@ -29,6 +29,8 @@ LINKS = (
         ('My Blog', 'https://blog.blahgeek.com/'), 
     )
 
+RECAPTCHA_PUBLIC_KEY = '6LctieMSAAAAAAUtpB7-ONk6WtH6PUxWQe_GGe1C'
+RECAPTCHA_PRIVATE_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
