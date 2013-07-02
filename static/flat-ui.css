@@ -28,7 +28,36 @@ input[type="button"].btn-block {
   font-weight: normal;
   font-style: normal;
 }
-.fui-new {
+.fui-arrow-right, 
+.fui-arrow-left, 
+.fui-cmd, 
+.fui-check-inverted, 
+.fui-heart, 
+.fui-location, 
+.fui-plus, 
+.fui-check, 
+.fui-cross, 
+.fui-list, 
+.fui-new, 
+.fui-video, 
+.fui-photo, 
+.fui-volume, 
+.fui-time, 
+.fui-eye, 
+.fui-chat, 
+.fui-search, 
+.fui-user, 
+.fui-mail, 
+.fui-lock, 
+.fui-gear, 
+.fui-radio-unchecked, 
+.fui-radio-checked, 
+.fui-checkbox-unchecked, 
+.fui-checkbox-checked, 
+.fui-calendar-solid, 
+.fui-pause, 
+.fui-play, 
+.fui-check-inverted-2{
   display: inline-block;
   font-family: 'Flat-UI-Icons';
   speak: none;
@@ -38,8 +67,95 @@ input[type="button"].btn-block {
   text-transform: none;
   -webkit-font-smoothing: antialiased;
 }
+.fui-arrow-right:before {
+    content: "\e02c";
+}
+.fui-arrow-left:before {
+    content: "\e02d";
+}
+.fui-cmd:before {
+    content: "\e02f";
+}
+.fui-check-inverted:before {
+    content: "\e006";
+}
+.fui-heart:before {
+    content: "\e007";
+}
+.fui-location:before {
+    content: "\e008";
+}
+.fui-plus:before {
+    content: "\e009";
+}
+.fui-check:before {
+    content: "\e00a";
+}
+.fui-cross:before {
+    content: "\e00b";
+}
+.fui-list:before {
+    content: "\e00c";
+}
 .fui-new:before {
-  content: "\e00d";
+    content: "\e00d";
+}
+.fui-video:before {
+    content: "\e00e";
+}
+.fui-photo:before {
+    content: "\e00f";
+}
+.fui-volume:before {
+    content: "\e010";
+}
+.fui-time:before {
+    content: "\e011";
+}
+.fui-eye:before {
+    content: "\e012";
+}
+.fui-chat:before {
+    content: "\e013";
+}
+.fui-search:before {
+    content: "\e01c";
+}
+.fui-user:before {
+    content: "\e01d";
+}
+.fui-mail:before {
+    content: "\e01e";
+}
+.fui-lock:before {
+    content: "\e01f";
+}
+.fui-gear:before {
+    content: "\e024";
+}
+.fui-radio-unchecked:before {
+    content: "\e02b";
+}
+.fui-radio-checked:before {
+    content: "\e032";
+}
+.fui-checkbox-unchecked:before {
+    content: "\e033";
+}
+.fui-checkbox-checked:before {
+    content: "\e034";
+}
+.fui-calendar-solid:before {
+    content: "\e022";
+}
+.fui-pause:before {
+    content: "\e03b";
+}
+.fui-play:before {
+    content: "\e03c";
+}
+.fui-check-inverted-2:before {
+    content: "\e000";
 }
 body {
   font-size: 14px;
@@ -640,12 +756,16 @@ textarea[class*="span"] {
   transition: 0.25s;
   -webkit-backface-visibility: hidden;
 }
-.login-link {
+.login-link-group {
   color: #bfc9ca;
   display: block;
   font-size: 13px;
   margin-top: 15px;
   text-align: center;
+}
+.login-link {
+  margin-right: 8px;
+  color: #bfc9ca;
 }
 #content {
     width: 100%;

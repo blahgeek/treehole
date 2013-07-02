@@ -25,8 +25,9 @@ CRE_STORAGE = os.path.join(DJANGO_ROOT_DIR, 'credential.dat')
 
 PAGE_ID = '601677049'
 LINKS = (
-        (u'清华小生活', 'http://weibo.com/ithulife'), 
-        ('My Blog', 'https://blog.blahgeek.com/'), 
+        ('My Blog', 'https://blog.blahgeek.com/', 'fui-location'), 
+        ('iThuLife', 'http://weibo.com/ithulife', 'fui-cmd'), 
+        ('Donate', 'https://me.alipay.com/blahgeek', 'fui-heart')
     )
 
 RECAPTCHA_PUBLIC_KEY = '6LctieMSAAAAAAUtpB7-ONk6WtH6PUxWQe_GGe1C'
