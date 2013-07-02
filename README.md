@@ -9,6 +9,7 @@
 
 ## 使用说明
 
+在[这里](http://www.google.com/recaptcha)申请验证码API，将key填入`treehole/settings.py`，
 修改`treehole/settings.py`中的`PAGE_ID, LINKS, SECRET_KEY`，
 运行`python2 manage.py syncdb`初始化数据库，
 准备Api等，如下。
