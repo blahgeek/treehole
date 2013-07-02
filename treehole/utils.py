@@ -17,7 +17,7 @@ from ipaddr import IPNetwork, IPAddress
 def needRecaptchar(addr, content):
     if ContentModel.objects.filter(
             ip=addr, 
-            time__range=(datetime.now()-timedelta(hours=12), \
+            time__range=(datetime.now()-timedelta(hours=24), \
                          datetime.now())
             ).count() > 2:
         return True
