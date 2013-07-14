@@ -17,11 +17,7 @@ DJANGO_ROOT_DIR = os.path.join(os.path.dirname(\
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '6ue@^pv4#42xyo-0@==9a0q41a(u9x04tf*udxyp)b)zd6$xl9'
 
-FLOW = flow_from_clientsecrets(
-        os.path.join(DJANGO_ROOT_DIR, 'client_secrets.json'), 
-        scope=['admin_page'])
-
-CRE_STORAGE = os.path.join(DJANGO_ROOT_DIR, 'credential.dat')
+COOKIR_PATH = os.path.join(DJANGO_ROOT_DIR, 'cookie.txt')
 
 PAGE_ID = '601677049'
 LINKS = (

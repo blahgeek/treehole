@@ -7,40 +7,33 @@ if hasattr(sys, 'setdefaultencoding'):
     sys.setdefaultencoding('UTF-8')
 
 import os
-from oauth2client.file import Storage
-from oauth2client.client import AccessTokenRefreshError
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.tools import run
 import httplib2
 import requests
-from .settings import DJANGO_ROOT_DIR, FLOW, CRE_STORAGE
+from BeautifulSoup import BeautifulSoup
+from .settings import COOKIR_PATH
+
+BASE_URL = 'http://3g.renren.com/status/newstatus.do'
 
 class RenRen:
 
-    def __init__(self, pageid):
-        self.pageid = pageid
-        self.storage = Storage(CRE_STORAGE)
-        self.cre = self.storage.get()
-
-    def auth(self):
-        run(FLOW, self.storage)
+    def __init__(self):
+        self.session = requests.Session()
+        cookie = open(COOKIR_PATH).read()
+        cookie = cookie.strip().split(';')
+        cookie = map(lambda x: x.split('=', 1), cookie)
+        cookie = dict(cookie)
+        self.session.cookies = requests.utils.cookiejar_from_dict(cookie)
 
     def postStatus(self, text):
-        assert(self.cre is not None)
-        if self.cre.access_token_expired:
-            # refresh token
-            http = httplib2.Http()
-            http = cre.authorize(http)
-            self.cre.refresh(http)
-        r = requests.post('https://api.renren.com/restserver.do', 
-                {
-                    'v': '1.0', 
-                    'access_token': self.cre.access_token, 
-                    'format': 'json', 
-                    'method': 'pages.setStatus', 
-                    'page_id': str(self.pageid), 
-                    'status': text
-                    })
-        # for different versions of requests
-        j = r.json() if hasattr(r.json, '__call__') else r.json
-        assert(j['result'] == 1)
+        soup = BeautifulSoup(self.session.get(BASE_URL).content)
+        form = soup.find('form')
+        assert(form is not None)
+        values = map(lambda x: (x['name'], x['value']), form.findAll('input', type='hidden'))
+        data = {'status': text}
+        data.update(dict(values))
+        req = self.session.post(form['action'], data)
+        # save cookie
+        with open(COOKIR_PATH, 'w') as f:
+            cookie = requests.utils.dict_from_cookiejar(self.session.cookies)
+            cookie = '; '.join([k+'='+v for k, v in cookie.iteritems()])
+            f.write(cookie)
