@@ -19,7 +19,7 @@ class RenRen:
     def __init__(self):
         self.session = requests.Session()
         cookie = open(COOKIR_PATH).read()
-        cookie = cookie.strip().split(';')
+        cookie = [x.strip() for x in cookie.split(';') if x]
         cookie = map(lambda x: x.split('=', 1), cookie)
         cookie = dict(cookie)
         self.session.cookies = requests.utils.cookiejar_from_dict(cookie)

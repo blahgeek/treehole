@@ -2,36 +2,23 @@
 
 例子参见[清华树洞](http://thutreehole.tk).
 
-由于2013年5月24号左右开始，人人的cookie会在每天零点时过期，需要重新登录，因此现在使用api方式发布状态。
+由于2013年5月24号左右开始，人人的cookie会在每天零点时过期，需要重新登录，~~因此现在使用api方式发布状态~~。
 但是未审核的api每用户每小时最多只能发布30条状态（好像），之后可以尝试采用多个api key或者多个用户的方式。
+
+2013年7月12号左右开始，由于人人公共主页的调整，通过api发布的内容不会在新鲜事中出现，需要点击公共主页右侧的“状态”才能看到，
+因此使用3g人人页面发布。
 
 新增发布量统计页面，在`/chart_hour`和`/chart_day`。
 
 ## 使用说明
 
-在[这里](http://www.google.com/recaptcha)申请验证码API，将key填入`treehole/settings.py`，
+- 申请一个公共主页后，另外申请一个马甲帐号A
+- 将A添加为公共主页的管理员
+- 在电脑隐身窗口登录A至`http://3g.renren.com`，在底部的“设置”中切换至公共主页，记录下cookie写入cookie.txt
+- 直接关闭浏览器
+
 修改`treehole/settings.py`中的`PAGE_ID, LINKS, SECRET_KEY`，
 运行`python2 manage.py syncdb`初始化数据库，
-准备Api等，如下。
-
-## 关于Api
-
-- 用个人的人人帐号在[这里](http://app.renren.com/developers/app)申请一个应用，注意在未审核的情况下只有管理员和开发者才能
-使用该应用。
-- 在应用信息的域名、安全设置的回调地址中填`localhost:8090`。
-- 在应用根文件夹下新建一个`client_secrets.json`文件，文件格式如下：
-
-    {
-        "installed": {
-            "client_id": "YOUR API KEY", 
-            "client_secret": "YOUR SECRET KEY", 
-            "redirect_uris": ["http://graph.renren.com/oauth/login_success.html"], 
-            "auth_uri": "https://graph.renren.com/oauth/authorize", 
-            "token_uri": "https://graph.renren.com/oauth/token"
-        }
-    }
-
-- 运行`./manage.py auth`认证。
 
 ## 关于textarea的placeholer
 
