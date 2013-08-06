@@ -3,40 +3,33 @@
 # Created at Mar 20 19:50 by BlahGeek@Gmail.com
 
 import sys
-if hasattr(sys, 'setdefaultencoding'):
-    sys.setdefaultencoding('UTF-8')
-
+import os
 import logging
+import requests
 from datetime import datetime, timedelta
 from treehole.renren import RenRen
-import os
 from treehole.models import ContentModel, BlockIpModel
-from ipaddr import IPNetwork, IPAddress
+from ipaddress import ip_address, ip_network
 
 def needRecaptchar(addr, content):
-    if ContentModel.objects.filter(
-            ip=addr, 
-            time__range=(datetime.now()-timedelta(hours=24), \
-                         datetime.now())
-            ).count() > 2:
-        return True
-    return False
-    
+    return ContentModel.objects.filter(ip=addr, 
+            time__range=(datetime.now()-timedelta(hours=24), 
+                         datetime.now())).count() > 2
 
 def checkIP(addr):
     IPS = (
-            IPNetwork('59.66.0.0/16'), 
-            IPNetwork('166.111.0.0/16'), 
-            IPNetwork('101.5.0.0/16'), 
-            IPNetwork('219.223.160.0/19'), 
+            ip_network('59.66.0.0/16'), 
+            ip_network('166.111.0.0/16'), 
+            ip_network('101.5.0.0/16'), 
+            ip_network('219.223.160.0/19'), 
             # private address
-            IPNetwork('127.0.0.0/8'), 
-            IPNetwork('10.0.0.0/8'), 
-            IPNetwork('192.168.0.0/16'), 
+            ip_network('127.0.0.0/8'), 
+            ip_network('10.0.0.0/8'), 
+            ip_network('192.168.0.0/16'), 
             )
     if BlockIpModel.objects.filter(ip=addr).count() > 0:
         return False
-    return any([IPAddress(addr) in x for x in IPS])
+    return any([ip_address(addr) in x for x in IPS])
 
 def postRawStatu(text):
     """ Post status without number, without saving to db"""
@@ -73,3 +66,19 @@ COLORS = [
         ('#E74C3C', '#C0392B'), 
         ('#95A5A6', '#7F8C8D')
         ]
+
+def validRecaptcha(challenge, response, key, ip):
+    if not (response and challenge and 
+            len(response) and len(challenge)):
+        return False
+    req = requests.post(
+            'http://www.google.com/recaptcha/api/verify', 
+            {
+                'privatekey': key, 
+                'remoteip': ip, 
+                'challenge': challenge, 
+                'response': response
+            })
+    req = req.text.strip()
+    return req.startswith('true')
+

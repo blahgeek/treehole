@@ -3,9 +3,9 @@
 # Created at Mar 20 18:38 by BlahGeek@Gmail.com
 
 import sys
-if hasattr(sys, 'setdefaultencoding'):
-    sys.setdefaultencoding('UTF-8')
-
+import logging
+import random
+from datetime import datetime, timedelta
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from django.template import RequestContext
@@ -13,20 +13,17 @@ from django.shortcuts import render_to_response, redirect
 from django.views.decorators.cache import cache_page
 from django.contrib import messages
 from treehole.models import ContentModel, PlaceholderModel
-from treehole.utils import checkIP, postStatu, MSG, COLORS, needRecaptchar
+from treehole.utils import checkIP, postStatu, MSG, COLORS
+from treehole.utils import needRecaptchar, validRecaptcha
 from treehole.settings import LINKS
 from treehole.settings import RECAPTCHA_PUBLIC_KEY, RECAPTCHA_PRIVATE_KEY
-from recaptcha.client import captcha
-from datetime import datetime, timedelta
-import logging
-import random
 
 @cache_page(60 * 60)
 def chart_day(req):
     now = datetime.now()
     today = datetime(now.year, now.month, now.day)
     data = {}
-    for i in xrange(1, 30):
+    for i in range(1, 30):
         start = today - timedelta(days=i)
         data[start.strftime('%Y-%m-%d 00:00:00 +0800')] = ContentModel.objects.filter(time__range=\
                 (start, start+timedelta(days=1))).count()
@@ -58,9 +55,10 @@ def index(req):
         _need_recaptcha = needRecaptchar(ipaddr, _content)
         if _need_recaptcha and len(req.POST.get('recaptcha_challenge_field', '')) == 0:
             messages.error(req, MSG['RECAPTCHA_NEEDED'])
-        elif _need_recaptcha and not captcha.submit(req.POST.get('recaptcha_challenge_field', ''), 
+        elif _need_recaptcha and not validRecaptcha(
+                req.POST.get('recaptcha_challenge_field', ''), 
                 req.POST.get('recaptcha_response_field'), 
-                RECAPTCHA_PRIVATE_KEY, ipaddr).is_valid:
+                RECAPTCHA_PRIVATE_KEY, ipaddr):
             messages.error(req, MSG['RECAPTCHA_INCORRECT'])
         elif not checkIP(ipaddr):
             messages.error(req, MSG['IP_NOT_VALID'])

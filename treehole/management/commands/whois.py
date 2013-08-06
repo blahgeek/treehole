@@ -16,4 +16,4 @@ class Command(BaseCommand):
     def handle(self, *v, **u):
         args = self.arguments
         assert(args.id)
-        print ContentModel.objects.get(id=args.id).ip
+        print(ContentModel.objects.get(id=args.id).ip)

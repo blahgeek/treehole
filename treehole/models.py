@@ -3,9 +3,6 @@
 # Created at Mar 20 19:19 by BlahGeek@Gmail.com
 
 import sys
-if hasattr(sys, 'setdefaultencoding'):
-    sys.setdefaultencoding('UTF-8')
-
 from django.db import models
 
 class ContentModel(models.Model):

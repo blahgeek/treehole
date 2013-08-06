@@ -32,7 +32,7 @@ class Command(BaseCommand):
 
         if args.list:
             for i in PlaceholderModel.objects.order_by('time').all():
-                print i.content
+                print(i.content)
 
         if args.add:
             m = PlaceholderModel(content=args.add, 

@@ -1,6 +1,5 @@
 django-argparse-command
-ipaddr
-oauth2client
 requests
+beautifulsoup4
 chartkick
-recaptcha-client
+httplib2

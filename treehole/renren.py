@@ -2,14 +2,10 @@
 # -*- coding=UTF-8 -*-
 # Created at May 26 10:07 by BlahGeek@Gmail.com
 
-import sys
-if hasattr(sys, 'setdefaultencoding'):
-    sys.setdefaultencoding('UTF-8')
-
 import os
 import httplib2
 import requests
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from .settings import COOKIR_PATH
 
 BASE_URL = 'http://3g.renren.com/status/newstatus.do'
@@ -35,5 +31,5 @@ class RenRen:
         # save cookie
         with open(COOKIR_PATH, 'w') as f:
             cookie = requests.utils.dict_from_cookiejar(self.session.cookies)
-            cookie = '; '.join([k+'='+v for k, v in cookie.iteritems()])
+            cookie = '; '.join([k+'='+v for k, v in cookie.items()])
             f.write(cookie)

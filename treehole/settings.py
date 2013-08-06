@@ -2,14 +2,8 @@
 # -*- coding=UTF-8 -*-
 # Created at Mar 20 19:19 by BlahGeek@Gmail.com
 
-import sys
-if hasattr(sys, 'setdefaultencoding'):
-    sys.setdefaultencoding('UTF-8')
-
-
 # Django settings for treehole project.
 import os 
-from oauth2client.client import flow_from_clientsecrets
 
 DJANGO_ROOT_DIR = os.path.join(os.path.dirname(\
         os.path.realpath(__file__)), '..')
