@@ -757,7 +757,7 @@ textarea[class*="span"] {
   -webkit-backface-visibility: hidden;
 }
 .login-link-group {
-  color: #bfc9ca;
+  color: #797979;
   display: block;
   font-size: 13px;
   margin-top: 15px;
@@ -765,7 +765,7 @@ textarea[class*="span"] {
 }
 .login-link {
   margin-right: 8px;
-  color: #bfc9ca;
+  color: #797979;
 }
 #content {
     width: 100%;
