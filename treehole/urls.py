@@ -6,8 +6,7 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
     url('^\d*$', 'treehole.views.index', name='index'), 
-    url('^chart_day/', 'treehole.views.chart_day', name='chart'), 
-    url('^chart_hour/', 'treehole.views.chart_hour', name='chart'), 
+    url('^chart/', 'treehole.views.chart', name='chart'), 
     # Examples:
     # url(r'^$', 'treehole.views.home', name='home'),
     # url(r'^treehole/', include('treehole.foo.urls')),
