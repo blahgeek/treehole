@@ -6,72 +6,76 @@
     {% if ISIPHONE and TOURL|length > 0 %}
     <script type="text/javascript">
       window.location = "{{ TOURL }}";
-      </script>
-      {% endif %}
-      <meta name="description" content="清华树洞">
-      {% if ISIPHONE %}
-      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-ipad3-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-iphone4-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-ipad-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-iphone.png">
-      {% endif %}
-      <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui.css">
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-      <!--[if lt IE 9]>
-      <script src="{{STATIC_URL}}html5shiv.js"></script>
-      <![endif]-->
+    </script>
+    {% endif %}
+    <meta name="description" content="清华树洞">
+    {% if ISIPHONE %}
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-ipad3-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-iphone4-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-ipad-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/{{ ICO_NUM }}/apple-touch-icon-iphone.png">
+    {% endif %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}flat-ui.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="{{STATIC_URL}}html5shiv.js"></script>
+    <![endif]-->
 
-    </head>
-    <body>
-      <div class="container">
-        <div class="login">
-          <div class="login-screen">
-            <a href="https://github.com/blahgeek/treehole"><img style="position: absolute; top: 38px; right: 38px; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-            <div class="login-icon">
-              <img src="{{STATIC_URL}}hole.jpg" />
-              <h4><small>清华树洞</small> 那些现实中没有发出的声音，请把它留在这里……</h4>
-            </div>
+  </head>
+  <body>
+    <div class="container">
+      <div class="login">
+        <div class="login-screen">
+          <a href="https://github.com/blahgeek/treehole"><img style="position: absolute; top: 38px; right: 38px; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+          <div class="login-icon">
+            <img src="{{STATIC_URL}}hole.jpg" />
+            <h4><small>清华树洞</small> 那些现实中没有发出的声音，请把它留在这里……</h4>
+          </div>
 
-            <div class="login-form">
-              <form action="/" method="POST">
-                {% csrf_token %}
-                <div class="control-group">
-                  <label for="content"></label>
-                  <textarea id="content" name="content" placeholder="{{PLACEHOLER}}">{{ content }}</textarea>
-                  <label class="login-field-icon fui-new"></label>
-                </div>
-                {% if need_recaptcha %}
-                <script type="text/javascript">var RecaptchaOptions = {theme: 'white'}; </script>
-                <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k={{ RECAPTCHA_PUBLIC_KEY }}"></script>
-                {% endif %}
-                {% if messages %}
-                {% for msg in messages %}
-                <div class="alert {% if msg.tags %}alert-{{ msg.tags }}{% endif %}">
-                  {{ msg }}
-                </div>
-                {% endfor %}
-                {% endif %}
+          <div class="login-form">
+            <form action="/" method="POST">
+              {% csrf_token %}
+              <div class="control-group">
+                <label for="content"></label>
+                <textarea id="content" name="content" placeholder="{{PLACEHOLER}}">{{ content }}</textarea>
+                <label class="login-field-icon fui-new"></label>
+              </div>
+              {% if need_recaptcha %}
+              <script type="text/javascript">var RecaptchaOptions = {theme: 'white'}; </script>
+              <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k={{ RECAPTCHA_PUBLIC_KEY }}"></script>
+              {% endif %}
+              {% if messages %}
+              {% for msg in messages %}
+              <div class="alert {% if msg.tags %}alert-{{ msg.tags }}{% endif %}">
+                {{ msg }}
+              </div>
+              {% endfor %}
+              {% endif %}
 
-                <input type="submit" class="btn btn-primary btn-large btn-block" value="提交">
-                <div class="login-link-group">
-                    {% for link in LINKS %}
-                    <span class="{{ link.2 }}"></span>
-                    <a class="login-link" href="{{ link.1 }}">{{ link.0 }}</a>
-                    {% endfor %}
-                </div>
-              </form>
-            </div>
+              <input type="submit" class="btn btn-primary btn-large btn-block" value="提交">
+              <div class="login-link-group">
+                  {% for link in LINKS %}
+                  <span class="{{ link.2 }}"></span>
+                  <a class="login-link" href="{{ link.1 }}">{{ link.0 }}</a>
+                  {% endfor %}
+              </div>
+            </form>
           </div>
         </div>
+        <div class="row" style="text-align: center; margin-top: 20px">
+          <a href="http://idea.thusast.org"><img src="{{ STATIC_URL }}grass.png"></a>
+        </div>
+      </div>
+    </div>
 
-        <script src="{{ STATIC_URL }}jquery.onfontresize.min.js" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}placeholder_polyfill.jquery.js" charset="utf-8"></script>
-        <script type="text/javascript">
-            $(".login-screen").css("background-color", "{{ COLOR.1 }}");
-            $(".btn-primary").css("background-color", "{{ COLOR.1 }}");
-            $(".btn-primary").hover(
-                    function(){$(this).css("background-color", "{{ COLOR.0 }}");}, 
-                    function(){$(this).css("background-color", "{{ COLOR.1 }}");});
-        </script>
-      </body>
-    </html>
+    <script src="{{ STATIC_URL }}jquery.onfontresize.min.js" charset="utf-8"></script>
+    <script src="{{ STATIC_URL }}placeholder_polyfill.jquery.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(".login-screen").css("background-color", "{{ COLOR.1 }}");
+        $(".btn-primary").css("background-color", "{{ COLOR.1 }}");
+        $(".btn-primary").hover(
+                function(){$(this).css("background-color", "{{ COLOR.0 }}");}, 
+                function(){$(this).css("background-color", "{{ COLOR.1 }}");});
+    </script>
+  </body>
+</html>
