@@ -50,7 +50,7 @@ def postStatu(text, ipaddr='127.0.0.1'):
             content=text)
     new_content.save()
     number = ContentModel.objects.count()
-    text = '#' + str(number) + ' ' + text
+    text = '#THU' + str(number) + '# ' + text
     postRawStatu(text)
 
 MSG = {

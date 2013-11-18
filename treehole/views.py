@@ -31,7 +31,7 @@ def chart(req):
     points = list()
     for p in vals:
         t = time.strptime(p['time'], '%Y-%m-%d')
-        t = time.mktime(t)
+        t = time.mktime(t) * 1000
         points.append((t, p['time_count']))
     return render_to_response('chart.html', 
             {'POINTS': points, 'TITLE': '树洞发布统计'}, 
